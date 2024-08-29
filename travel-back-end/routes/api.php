@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DayController;
+use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\StageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('holidays', HolidayController::class);
+Route::apiResource('days', DayController::class);
+Route::apiResource('stages', StageController::class);

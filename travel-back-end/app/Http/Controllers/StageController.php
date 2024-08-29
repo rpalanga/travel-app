@@ -13,7 +13,9 @@ class StageController extends Controller
      */
     public function index()
     {
-        //
+           // Recupera tutti gli stages
+           $stages = Stage::all();
+           return response()->json($stages);
     }
 
     /**
@@ -29,7 +31,17 @@ class StageController extends Controller
      */
     public function store(StoreStageRequest $request)
     {
-        //
+        $validated = $request->validate([
+            'day_id' => 'required|exists:days,id',
+            'name' => 'required|string|max:255',
+            'img' => 'nullable|string',
+            'description' => 'nullable|string',
+            'latitude' => 'nullable|string',
+            'longitude' => 'nullable|string',
+        ]);
+
+        $stage = Stage::create($validated);
+        return response()->json($stage, 201);
     }
 
     /**
@@ -37,7 +49,8 @@ class StageController extends Controller
      */
     public function show(Stage $stage)
     {
-        //
+           // Recupera un singolo stage
+           return response()->json($stage);
     }
 
     /**
@@ -53,7 +66,16 @@ class StageController extends Controller
      */
     public function update(UpdateStageRequest $request, Stage $stage)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'img' => 'nullable|string',
+            'description' => 'nullable|string',
+            'latitude' => 'nullable|string',
+            'longitude' => 'nullable|string',
+        ]);
+
+        $stage->update($validated);
+        return response()->json($stage);
     }
 
     /**
@@ -61,6 +83,7 @@ class StageController extends Controller
      */
     public function destroy(Stage $stage)
     {
-        //
+        $stage->delete();
+        return response()->json(null, 204);
     }
 }

@@ -13,7 +13,8 @@ class HolidayController extends Controller
      */
     public function index()
     {
-        //
+        $holidays = Holiday::with('days.stages')->get();
+        return response()->json($holidays);
     }
 
     /**
@@ -29,7 +30,17 @@ class HolidayController extends Controller
      */
     public function store(StoreHolidayRequest $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'img' => 'nullable|string',
+            'description' => 'nullable|string',
+            // Altre validazioni se necessarie
+        ]);
+
+        $holiday = Holiday::create($request->all());
+        return response()->json($holiday, 201);
+
+        
     }
 
     /**
@@ -37,7 +48,8 @@ class HolidayController extends Controller
      */
     public function show(Holiday $holiday)
     {
-        //
+        $holiday->load('days.stages');
+        return response()->json($holiday);
     }
 
     /**
@@ -53,7 +65,15 @@ class HolidayController extends Controller
      */
     public function update(UpdateHolidayRequest $request, Holiday $holiday)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'img' => 'nullable|string',
+            'description' => 'nullable|string',
+            
+        ]);
+
+        $holiday->update($request->all());
+        return response()->json($holiday);
     }
 
     /**
@@ -61,6 +81,7 @@ class HolidayController extends Controller
      */
     public function destroy(Holiday $holiday)
     {
-        //
+        $holiday->delete();
+        return response()->json(null, 204);
     }
 }
