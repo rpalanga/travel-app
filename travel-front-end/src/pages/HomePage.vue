@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import apiClient from 'axios';
 export default {
 
-  name:'Diary',
+  name:'HomePage',
 
   data() {
 
@@ -16,20 +16,20 @@ export default {
     loadHolidays() {
       apiClient.get('/holidays').then(response => {
         this.holidays = response.data;
-        console.log(response.data)
+        console.log('questo dato qui'+response.data.data)
       });
     },
-    createNewHoliday() {
-      const newHoliday = { title: 'New Holiday' };
-      apiClient.post('/holidays', newHoliday).then(() => {
-        this.loadHolidays();
-      });
-    },
-    deleteHoliday(id) {
-      apiClient.delete(`/holidays/${id}`).then(() => {
-        this.loadHolidays();
-      });
-    }
+    // createNewHoliday() {
+    //   const newHoliday = { title: 'New Holiday' };
+    //   apiClient.post('/holidays', newHoliday).then(() => {
+    //     this.loadHolidays();
+    //   });
+    // },
+    // deleteHoliday(id) {
+    //   apiClient.delete(`/holidays/${id}`).then(() => {
+    //     this.loadHolidays();
+    //   });
+    // }
   },
   mounted() {
     this.loadHolidays();
@@ -42,13 +42,18 @@ export default {
 
     <div>
       <h1>Holiday List</h1>
-      <ul>
+      <!-- <ul>
         <li v-for="holiday in holidays" :key="holiday.id">
           {{ holiday.title }}
           <button @click="deleteHoliday(holiday.id)">Delete</button>
         </li>
       </ul>
-      <button @click="createNewHoliday">Add Holiday</button>
+      <button @click="createNewHoliday">Add Holiday</button> -->
+      <ul>
+        <li v-for="holiday in holidays" :key="holiday.id">
+            {{ holiday }}
+        </li>
+      </ul>
     </div>
   
 </template>
