@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\DayController;
-use App\Http\Controllers\HolidayController;
-use App\Http\Controllers\StageController;
+use App\Http\Controllers\Api\StageController;
+use App\Http\Controllers\Api\DayController;
+use App\Http\Controllers\Api\HolidayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +21,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('holidays', HolidayController::class);
-Route::apiResource('days', DayController::class);
-Route::apiResource('stages', StageController::class);
+// Route::apiResource('holidays', HolidayController::class);
+// Route::apiResource('days', DayController::class);
+// Route::apiResource('stages', StageController::class);
+
+Route::get('/holidays', [HolidayController::class, 'index']);
+Route::get('/holidays/{id}', [HolidayController::class, 'show']);
+Route::get('/days', [DayController::class, 'index']);
+Route::get('/days/{id}', [DayController::class, 'show']);
+Route::get('/stages', [StageController::class, 'index']);
+Route::get('/stages/{id}', [StageController::class, 'show']);
+
+// Route::get('/stages', [HolidayController::class, 'index']);
+
