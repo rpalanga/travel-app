@@ -34,9 +34,9 @@ class HolidayController extends Controller
     public function store(Request $request)
     {
         $validator = FacadesValidator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'img' => 'nullable',
             'description' => 'nullable|string',
-            // Add other fields as per your table schema
         ]);
 
         if ($validator->fails()) {
