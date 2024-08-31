@@ -29,9 +29,9 @@ export default {
     },
 
     createNewHoliday() {
-      const newHoliday = { title: 'Holiday Name', img: 'Image url', description: 'Description Holiday' };
-      apiClient.post('/holidays', newHoliday).then(() => {
+      apiClient.post('/holidays', this.newHoliday).then(() => {
         this.loadHolidays();
+        this.newHoliday = { title: '', img: '', description: '' };
       });
     },
     editHoliday(holiday) {
