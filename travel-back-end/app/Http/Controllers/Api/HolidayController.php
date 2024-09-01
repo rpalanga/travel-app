@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class HolidayController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         $holidays = Holiday::with('days.stages')->get();
 
@@ -19,12 +20,13 @@ class HolidayController extends Controller
             'results' => $holidays
         ]);
     }
-    public function show($id){
+    public function show($id)
+    {
 
         $holidays = Holiday::select('holidays.*')
-        ->where('id', '=', $id)
-        ->with('days.stages')->get();
-        
+            ->where('id', '=', $id)
+            ->with('days.stages')->get();
+
         return response()->json([
             'success' => true,
             'results' => $holidays
@@ -55,6 +57,45 @@ class HolidayController extends Controller
             'results' => $holiday
         ], 201);
     }
+    public function update(Request $request, $id)
+    {
+        // Trova la festività corrispondente all'ID
+        $holiday = Holiday::find($id);
+
+        // Controlla se la festività esiste
+        if (!$holiday) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Holiday not found'
+            ], 404);
+        }
+
+        // Valida i dati della richiesta
+        $validator = FacadesValidator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'img' => 'nullable',
+            'description' => 'nullable|string',
+        ]);
+
+        // Se la validazione fallisce, restituisce un errore
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Aggiorna la festività con i dati validati
+        $holiday->update($request->all());
+
+        // Restituisce una risposta JSON di successo
+        return response()->json([
+            'success' => true,
+            'message' => 'Holiday updated successfully',
+            'results' => $holiday
+        ], 200);
+    }
 
     public function destroy($id)
     {
@@ -75,5 +116,5 @@ class HolidayController extends Controller
         ], 200);
     }
 
-    
+
 }
