@@ -62,41 +62,78 @@ export default {
 
   <div>
 
-    <div>
-      <h1>Holiday List</h1>
-      <ul>
-        <li v-for="holiday in holidays" :key="holiday.id">
-          {{ holiday.title }} - <br> {{ holiday.description }}
-          <img :src="holiday.img" alt="">
-          <button @click="editHoliday(holiday)">Edit</button>
-          <button @click="deleteHoliday(holiday.id)">Delete</button>
-        </li>
-      </ul>
-      <form @submit.prevent="createNewHoliday()">
-        <input v-model="newHoliday.title" placeholder="Holiday Name" required />
-        <input v-model="newHoliday.img" placeholder="Image URL" required />
-        <input v-model="newHoliday.description" placeholder="Description" required />
-        <button type="submit">Add Holiday</button>
+    <div class="container">
+      <h1 class=" display-2">Holiday List</h1>
+    
+      <div class="row">
+        <!-- Itera sulle festività e crea una card per ciascuna -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" v-for="holiday in holidays" :key="holiday.id">
+          <div class="card h-100">
+            <img :src="holiday.img" class="card-img-top" :alt="holiday.title" style="height: 200px; object-fit: cover;">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ holiday.title }}</h5>
+              <p class="card-text">{{ holiday.description }}</p>
+              <div class="mt-auto">
+                <button @click="editHoliday(holiday)" class="btn btn-warning btn-sm">Edit</button>
+                <button @click="deleteHoliday(holiday.id)" class="btn btn-danger btn-sm">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form per aggiungere una nuova festività -->
+      <form @submit.prevent="createNewHoliday()" class="mt-4">
+        <div class="row">
+          <div class="col-12 col-md-4 mb-3">
+            <input v-model="newHoliday.title" class="form-control" placeholder="Holiday Name" required />
+          </div>
+          <div class="col-12 col-md-4 mb-3">
+            <input v-model="newHoliday.img" class="form-control" placeholder="Image URL" required />
+          </div>
+          <div class="col-12 col-md-4 mb-3">
+            <textarea v-model="newHoliday.description" class="form-control" placeholder="Description" required></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Holiday</button>
       </form>
-      <div v-if="editingHoliday">
+
+      <!-- Form per modificare una festività esistente -->
+      <div v-if="editingHoliday" class="mt-4">
+        <h3>Edit Holiday</h3>
         <form @submit.prevent="updateHoliday(editingHoliday.id)">
-        <input v-model="editingHoliday.title" placeholder="Holiday Name" required />
-        <input v-model="editingHoliday.img" placeholder="Image URL" />
-        <input v-model="editingHoliday.description" placeholder="Description" />
-        <button type="submit">Update</button>
-        <button @click="cancelEdit">Cancel</button>
-      </form>
-        
+          <div class="row">
+            <div class="col-12 col-md-4 mb-3">
+              <input v-model="editingHoliday.title" class="form-control" placeholder="Holiday Name" required />
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+              <input v-model="editingHoliday.img" class="form-control" placeholder="Image URL" />
+            </div>
+            <div class="col-12 col-md-4 mb-3">
+              <textarea v-model="editingHoliday.description" class="form-control" placeholder="Description"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-success">Update</button>
+          <button type="button" @click="cancelEdit" class="btn btn-secondary">Cancel</button>
+        </form>
       </div>
     </div>
-    </div>
+  </div>
 
 </template>
 
 
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+
+.container {
+  max-width: 1200px;
+  padding: 0 15px;
+}
+
+/* Mantieni l'immagine della card adattabile al contenuto */
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
 }
 </style>
