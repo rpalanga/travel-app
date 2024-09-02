@@ -33,4 +33,6 @@ Route::apiResource('stages', StageController::class);
 // Route::get('/stages/{id}', [StageController::class, 'show']);
 
 // Route::get('/stages', [HolidayController::class, 'index']);
+// prova
+Route::get('/holidays/{id}/days', [HolidayController::class, 'getDays']);
 

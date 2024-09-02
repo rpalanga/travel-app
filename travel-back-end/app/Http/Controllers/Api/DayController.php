@@ -22,6 +22,12 @@ class DayController extends Controller
         ]);
     }
 
+    // prova
+    public function getDays($id) {
+        $days = Day::where('holiday_id', $id)->get();
+        return response()->json(['success' => true, 'results' => $days]);
+    }
+
     public function show($id)
     {
         $day = Day::select('days.*')
