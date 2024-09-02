@@ -63,7 +63,7 @@ export default {
   <div>
 
     <div class="container">
-      <h1 class=" display-2">Holiday List</h1>
+      <h1 class=" display-5 fw-bolder">Holiday List</h1>
     
       <div class="row">
         <!-- Itera sulle festività e crea una card per ciascuna -->
